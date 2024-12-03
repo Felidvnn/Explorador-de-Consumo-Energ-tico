@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escoger opción a calcular</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf1e1; /* Fondo suave verde claro */
+            color: #2d6a4f; /* Texto verde oscuro */
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50; /* Verde fuerte para el encabezado */
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 36px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        .menu {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px; /* Añadir espacio debajo del menú */
+        }
+        .menu button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .menu button:hover {
+            background-color: #45a049;
+        }
+        .form-section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* Ocultar la calculadora inicialmente */
+            margin-bottom: 70px; /* Añadir espacio debajo de la sección de formulario */
+        }
+        label {
+            display: block;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50; /* Botón verde */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049; /* Efecto hover */
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            word-wrap: break-word; /* Evitar que el texto se corte */
+        }
+
+        #resultado2 {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            word-wrap: break-word; /* Evitar que el texto se corte */
+        }
+
+        .panel-image {
+            width: 200px; /* Ajustar tamaño */
+            height: auto;
+            position: absolute;
+            top: 20px; /* Espacio desde la parte superior */
+            right: 20px; /* Espacio desde la derecha */
+            border-radius: 8px;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+            padding-left: 10px; /* Espacio a la izquierda */
+            padding-right: 15px; /* Espacio adicional a la derecha */
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Escoger opción a calcular</h1>
+        <img src="udp.png" alt="Logo UDP" class="panel-image">
+    </header>
+
+    <div class="container">
+        <!-- Menú de opciones -->
+        <div class="menu">
+            <button onclick="mostrarCalculadora('roi')">Calcular ROI</button>
+            <button onclick="mostrarCalculadora('rent')">Calcular Ahorro</button>
+        </div>
+
+        <!-- Sección de cálculo de ROI -->
+        <div id="formROI" class="form-section">
+            <h2>Introduce los datos para calcular el ROI:</h2>
+            <form id="roiForm">
+                <label for="monto">Monto de Inversión:</label>
+                <input type="number" id="monto" step="0.01" required>
+
+                <label for="paneles">Número de Paneles:</label>
+                <input type="number" id="paneles" required>
+
+                <label for="baterias">Número de Baterías:</label>
+                <input type="number" id="baterias" required>
+
+                <label for="consumo">Consumo Mensual (kWh):</label>
+                <input type="number" id="consumo" step="0.01" required>
+
+                <button type="button" onclick="mostrarROI()">Calcular ROI</button>
+            </form>
+
+            <div id="resultado"></div>
+        </div>
+
+        <div id="formRent" class="form-section">
+            <h2>Introduce los datos para calcular el ahorro:</h2>
+            <form id="rentForm">
+                <label for="capacidad">Capacidad máxima sistema de baterías (kWh):</label>
+                <input type="number" id="capacidad" step="1" required>
+
+                <label for="consumo2">Consumo eléctrico actual cliente (kWh):</label>
+                <input type="number" id="consumo2" required>
+
+                <label for="comuna">Comuna:</label>
+                <input type="number" id="comuna" required>
+
+                <label for="generacion">Generación renovable (kW):</label>
+                <input type="number" id="generacion" step="0.01" required>
+
+                <button type="button" onclick="mostrarAhorro()">Calcular Ahorro</button>
+            </form>
+
+            <div id="resultado2"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de ROI y Ahorro - Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function mostrarCalculadora(tipo) {
+            // Ocultar todas las secciones de calculadoras
+            document.getElementById('formROI').style.display = 'none';
+            document.getElementById('formRent').style.display = 'none';
+            
+            // Mostrar la sección correspondiente
+            if (tipo === 'roi') {
+                document.getElementById('formROI').style.display = 'block';
+            }
+            if (tipo === 'rent') {
+                document.getElementById('formRent').style.display = 'block';
+            }
+
+        }
+
+        function calcularROI(monto, paneles, baterias, consumo) {
+            // Lógica de cálculo de ROI (puedes agregarla aquí)
+            return {
+                costo_total: monto + (paneles * 100) + (baterias * 50),
+                tiempo_retorno: 12 // ejemplo estático
+            };
+        }
+
+        function calcularAhorro(capacidad, consumo, comuna, generacion) {
+            // Lógica de cálculo de Ahorro
+            return {
+                Ahorro_total: 120000// ejemplos estáticos
+            };
+        }
+
+        function mostrarROI() {
+            const montoInversion = parseFloat(document.getElementById('monto').value);
+            const numPaneles = parseInt(document.getElementById('paneles').value);
+            const numBaterias = parseInt(document.getElementById('baterias').value);
+            const consumoMensual = parseFloat(document.getElementById('consumo').value);
+
+            const resultado = calcularROI(montoInversion, numPaneles, numBaterias, consumoMensual);
+
+            document.getElementById('resultado').innerHTML = 
+                `Costo Total: $${resultado.costo_total}<br>Tiempo de Retorno: ${resultado.tiempo_retorno.toFixed(2)} años.`;
+        }
+
+        function mostrarAhorro() {
+            const capacidad = parseFloat(document.getElementById('capacidad').value);
+            const consumo = parseInt(document.getElementById('consumo2').value);
+            const comuna = parseInt(document.getElementById('comuna').value);
+            const generacion = parseFloat(document.getElementById('generacion').value);
+            // Falta hacer un plegable por comuna para automatizar el consumo
+            const resultado = calcularAhorro(capacidad, consumo, comuna, generacion);
+
+            document.getElementById('resultado2').innerHTML = 
+                `Ahorro: $${resultado.Ahorro_total.toFixed(2)}<br>`;
+        }
+    </script>
+</body>
+</html>
