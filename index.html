@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
+        
         html, body, #map {
             width: 100%;
             height: 100%;
@@ -46,8 +47,8 @@
             position: fixed;
             left: 0;
             top: 0;
-            width: 100;
-            height: 100;
+            width: 100%;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.4);
             z-index: 9998;
         }
@@ -62,9 +63,9 @@
             border-radius: 0px;
             z-index: 9997;
             position: fixed;
-            top: 50;
-            left: 50;
-            transform: translate(-50, -50);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
@@ -86,9 +87,49 @@
 
         /* Estilo para el iframe */
         iframe {
-            width: 100;
-            height: 100;
+            width: 100%;
+            height: 100%;
             border: none;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 15px;
+            width: 80%;
+            height: 80%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lightbox-content iframe {
+            flex: 1;
+            border: none;
+        }
+
+        .lightbox .close {
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
         }
         </style>
         <title>Explorador de Consumo</title>
@@ -97,11 +138,11 @@
         <div id="map">
         </div>
         <button class="float-btn" onclick="openCalculator()">Abrir Calculadora</button>
-        <div id="calculatorModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeCalculator()">&times;</span>
-                <iframe id="calculatorIframe" src="https://felidvnn.github.io/CalculadoraEnergetica/calculadora.html"></iframe>
-            </div>
+        <div id="calculatorLightbox" class="lightbox">
+          <div class="lightbox-content">
+              <span class="close" onclick="closeCalculator()">&times;</span>
+              <iframe id="calculatorIframe" src="https://felidvnn.github.io/CalculadoraEnergetica/calculadora.html"></iframe>
+          </div>
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
@@ -120,7 +161,7 @@
         <script src="js/tailDT.js"></script>
 <script src="js/nouislider.min.js"></script>
 <script src="js/wNumb.js"></script>
-        <script src="https://dulcet-heliotrope-040545.netlify.app/Simplificado_1.js"></script>
+        <script src="data/Simplificado_1.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -228,6 +269,10 @@
                         <td>' + (feature.properties['Santiago 2022-10V2_Región'] !== null ? autolinker.link(feature.properties['Santiago 2022-10V2_Región'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
+                        <th scope="row">Comuna</th>\
+                        <td>' + (feature.properties['Comuna'] !== null ? autolinker.link(feature.properties['Comuna'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
                         <th scope="row">Consumo Total (MWh)</th>\
                         <td>' + (feature.properties['Santiago 2022-10V2_Energia Mw'] !== null ? autolinker.link(feature.properties['Santiago 2022-10V2_Energia Mw'].toLocaleString()) : '') + '</td>\
                     </tr>\
@@ -286,7 +331,7 @@
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
         var overlaysTree = [
-            {label: '<img src="legend/Simplificado_1.png" /> Comunas', layer: layer_Simplificado_1},
+            {label: '<img src="legend/Simplificado_1.png" /> Simplificado', layer: layer_Simplificado_1},
             {label: "Google Satellite", layer: layer_GoogleSatellite_0},]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
@@ -315,7 +360,7 @@
         col1.className="col9";
         col1.id = "mapWindow";
         col1.style.height = "100%";
-        col1.style.width = "83%";
+        col1.style.width = "85%";
         col1.style.display = "inline-block";
         var col2 = document.createElement('div');
         col2.className="col3";
@@ -838,13 +883,13 @@
             div_Region.appendChild(reset_Region);
               // Función para abrir el modal con la calculadora
         function openCalculator() {
-           document.getElementById('calculatorModal').style.display = "block";
+            document.getElementById('calculatorLightbox').style.display = "block";
        }
 
        // Función para cerrar el modal
        function closeCalculator() {
-           document.getElementById('calculatorModal').style.display = "none";
-       }
+            document.getElementById('calculatorLightbox').style.display = "none";
+          }
         </script>
     </body>
 </html>
